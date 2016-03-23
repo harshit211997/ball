@@ -1,14 +1,12 @@
 package com.sdsmdg.harshit.customview;
 
 import android.content.Context;
-import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.Display;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
@@ -63,7 +61,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            moveRocket();
+                            //moveRocket();
                         }
                     });
                 }
