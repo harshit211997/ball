@@ -10,7 +10,6 @@ import android.view.View;
 public class Surface extends View {
 
     int radius = 50;
-    int X = 50, Y = 50;
     double _xDelta=0, _yDelta = 0;
     Rocket rocket;
 
@@ -24,7 +23,7 @@ public class Surface extends View {
     public Surface(Context context, AttributeSet attrs) {
         super(context, attrs);
 
-        rocket = new Rocket(getMeasuredWidth(), getMeasuredHeight());
+        rocket = new Rocket(0, 0);
 
         circlePaint = new Paint();
         TypedArray a = context.getTheme().obtainStyledAttributes(attrs, R.styleable.Rocket, 0, 0);
@@ -34,6 +33,12 @@ public class Surface extends View {
         } finally {
             a.recycle();
         }
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh) {
+        super.onSizeChanged(w, h, oldw, oldh);
+        rocket = new Rocket(w/2, h/2);
     }
 
     @Override
@@ -65,8 +70,8 @@ public class Surface extends View {
     public void update(AccelerometerData Adata)
     {
 
-        _xDelta = _xDelta + Adata.vx/50;
-        _yDelta = _yDelta + Adata.vy/50;
+        _xDelta = _xDelta + Adata.vx;
+        _yDelta = _yDelta + Adata.vy;
 
         rocket.x = rocket.x - (int)_xDelta;
         rocket.y = rocket.y + (int)_yDelta;
