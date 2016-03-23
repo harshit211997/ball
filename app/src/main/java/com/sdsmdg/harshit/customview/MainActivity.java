@@ -8,11 +8,10 @@ import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
-    Rocket rocket;
+    Surface surface;
     private ViewGroup mRootLayout;
     private double _xDelta;
     private double _yDelta;
@@ -21,7 +20,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     Sensor senAccelerometer;
     AccelerometerData Adata;
     double gravity[];
-    double linear_acceleration[];
     String LOG_TAG = "harshit";
 
 
@@ -32,10 +30,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         mRootLayout = (ViewGroup) findViewById(R.id.root);
 
-        rocket = (Rocket) findViewById(R.id.rocket);
-
-        RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(150, 150);
-        rocket.setLayoutParams(params);
+        surface = (Surface) findViewById(R.id.rocket);
 
         //Declaring the accelerometer
         senSensorManager = (SensorManager) getSystemService(Context.SENSOR_SERVICE);
@@ -45,7 +40,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         Adata = new AccelerometerData();
 
         gravity = new double[3];
-        linear_acceleration = new double[3];
 
 
         final MoveRocket moveRocket = new MoveRocket();
@@ -61,7 +55,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            //moveRocket();
+                            moveRocket();
                         }
                     });
                 }
@@ -102,14 +96,14 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
             gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
 
-            linear_acceleration[0] = event.values[0] - gravity[0];
-            linear_acceleration[1] = event.values[1] - gravity[1];
-            linear_acceleration[2] = event.values[2] - gravity[2];
-
-            Adata.update(linear_acceleration[0], linear_acceleration[1], linear_acceleration[2]);
+            Adata.update(gravity[0], gravity[1], gravity[2]);
         }
 
     }
 
+    public void moveRocket()
+    {
+        surface.update();
+    }
 
 }

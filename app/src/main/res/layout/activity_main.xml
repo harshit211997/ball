@@ -7,10 +7,10 @@
     tools:context="com.sdsmdg.harshit.customview.MainActivity"
     android:id="@+id/root">
 
-    <com.sdsmdg.harshit.customview.Rocket
+    <com.sdsmdg.harshit.customview.Surface
         android:id="@+id/rocket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         app:circleColor="#000000"/>
 
 
