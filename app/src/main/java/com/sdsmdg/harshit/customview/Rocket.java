@@ -11,10 +11,4 @@ public class Rocket{
         radius = 50;
     }
 
-    public void moveRocket(int x, int y)
-    {
-        this.x = x;
-        this.y = y;
-    }
-
 }

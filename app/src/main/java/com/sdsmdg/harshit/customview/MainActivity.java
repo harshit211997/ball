@@ -11,6 +11,7 @@ import android.view.ViewGroup;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
+    Rocket rocket;
     Surface surface;
     private ViewGroup mRootLayout;
     private double _xDelta;
@@ -103,7 +104,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     public void moveRocket()
     {
-        surface.update();
+        surface.update(Adata);
     }
 
 }
