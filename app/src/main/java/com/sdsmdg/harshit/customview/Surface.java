@@ -5,6 +5,7 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 public class Surface extends View {
@@ -73,8 +74,27 @@ public class Surface extends View {
         _xDelta = _xDelta + Adata.vx;
         _yDelta = _yDelta + Adata.vy;
 
-        rocket.x = rocket.x - (int)_xDelta;
-        rocket.y = rocket.y + (int)_yDelta;
+        rocket.x = rocket.x - (int)(_xDelta);
+        rocket.y = rocket.y + (int)(_yDelta);
+
+        if(rocket.x < 0)
+        {
+            rocket.x = getMeasuredWidth() ;
+        }
+        else if(rocket.x > getMeasuredWidth() )
+        {
+            rocket.x = 0;
+        }
+        if(rocket.y < 0)
+        {
+            rocket.y = getMeasuredHeight() ;
+        }
+        else if(rocket.y > getMeasuredHeight() )
+        {
+            rocket.y = 0;
+        }
+
+        Log.i("harshit", rocket.x + " " + rocket.y);
 
         invalidate();
 
