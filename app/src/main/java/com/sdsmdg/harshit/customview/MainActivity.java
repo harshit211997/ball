@@ -7,29 +7,21 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.view.ViewGroup;
+import android.util.Log;
 
 public class MainActivity extends AppCompatActivity implements SensorEventListener{
 
-    Rocket rocket;
     Surface surface;
-    private ViewGroup mRootLayout;
-    private double _xDelta;
-    private double _yDelta;
 
     SensorManager senSensorManager;
     Sensor senAccelerometer;
     AccelerometerData Adata;
     double gravity[];
-    String LOG_TAG = "harshit";
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        mRootLayout = (ViewGroup) findViewById(R.id.root);
 
         surface = (Surface) findViewById(R.id.rocket);
 
@@ -51,7 +43,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 while(true)
                 {
                     try {
-                        Thread.sleep(100);
+                        Thread.sleep(10);
                     } catch(Exception e) { }
                     runOnUiThread(new Runnable() {
                         @Override
@@ -74,7 +66,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     protected void onResume() {
         super.onResume();
-        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_NORMAL);
+        senSensorManager.registerListener(this, senAccelerometer, SensorManager.SENSOR_DELAY_FASTEST);
     }
 
 
@@ -97,7 +89,9 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             gravity[1] = alpha * gravity[1] + (1 - alpha) * event.values[1];
             gravity[2] = alpha * gravity[2] + (1 - alpha) * event.values[2];
 
-            Adata.update(gravity[0], gravity[1], gravity[2]);
+            Log.i("harshit", gravity[0] + " " + gravity[1] + " ");
+
+            Adata.update(event.values[0], event.values[1], event.values[2]);
         }
 
     }
@@ -105,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     public void moveRocket()
     {
         surface.update(Adata);
+        Adata.calculateVelocity();
     }
 
 }

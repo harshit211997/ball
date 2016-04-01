@@ -19,12 +19,11 @@ public class AccelerometerData
         this.ax = ax;
         this.ay = ay;
         this.az = az;
-        calculateVelocity();
     }
 
     public void calculateVelocity()
     {
-        vx += ax;
+        vx -= ax;
         vy += ay;
         vz += az;
     }

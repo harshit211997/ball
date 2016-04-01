@@ -5,7 +5,6 @@ import android.content.res.TypedArray;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 
 public class Surface extends View {
@@ -71,30 +70,36 @@ public class Surface extends View {
     public void update(AccelerometerData Adata)
     {
 
-        _xDelta = _xDelta + Adata.vx;
-        _yDelta = _yDelta + Adata.vy;
+        _xDelta += 0.01 * Adata.vx;
+        _yDelta += 0.01 * Adata.vy;
 
-        rocket.x = rocket.x - (int)(_xDelta);
+        rocket.x = rocket.x + (int)(_xDelta);
         rocket.y = rocket.y + (int)(_yDelta);
 
-        if(rocket.x < 0)
+        if(rocket.x < 50)
         {
-            rocket.x = getMeasuredWidth() ;
+            Adata.vx = -0.3*Adata.vx ;
+            rocket.x = 50;
+            _xDelta = 0;
         }
-        else if(rocket.x > getMeasuredWidth() )
+        else if(rocket.x > getMeasuredWidth()-50 )
         {
-            rocket.x = 0;
+            Adata.vx = -0.3*Adata.vx ;
+            rocket.x = getMeasuredWidth()-50;
+            _xDelta = 0;
         }
-        if(rocket.y < 0)
+        if(rocket.y < 50)
         {
-            rocket.y = getMeasuredHeight() ;
+            Adata.vy = -0.3*Adata.vy ;
+            rocket.y = 50;
+            _yDelta = 0;
         }
-        else if(rocket.y > getMeasuredHeight() )
+        else if(rocket.y > getMeasuredHeight()-50 )
         {
-            rocket.y = 0;
+            Adata.vy = -0.3*Adata.vy ;
+            rocket.y = getMeasuredHeight()-50;
+            _yDelta = 0;
         }
-
-        Log.i("harshit", rocket.x + " " + rocket.y);
 
         invalidate();
 
